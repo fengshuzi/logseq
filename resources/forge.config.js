@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   packagerConfig: {
@@ -8,75 +8,30 @@ module.exports = {
     asar: true,
     protocols: [
       {
-        "protocol": "logseq",
-        "name": "logseq",
-        "schemes": "logseq"
+        protocol: 'logseq',
+        name: 'logseq',
+        schemes: ['logseq']
       }
-    ],
-    osxSign: {
-      identity: 'Developer ID Application: Tiansheng Qin',
-      'hardened-runtime': true,
-      entitlements: 'entitlements.plist',
-      'entitlements-inherit': 'entitlements.plist',
-      'signature-flags': 'library'
-    },
-    osxNotarize: {
-      appleId: process.env['APPLE_ID'],
-      appleIdPassword: process.env['APPLE_ID_PASSWORD'],
-      ascProvider: process.env['APPLE_ASC_PROVIDER']
-    },
+    ]
   },
   makers: [
     {
-      'name': '@electron-forge/maker-squirrel',
-      'config': {
-        'name': 'Logseq',
-        'setupIcon': './icons/logseq.ico',
-        'loadingGif': './icons/installing.gif',
-        'certificateFile': process.env.CODE_SIGN_CERTIFICATE_FILE,
-        'certificatePassword': process.env.CODE_SIGN_CERTIFICATE_PASSWORD,
-        "rfc3161TimeStampServer": "http://timestamp.digicert.com"
-      }
-    },
-    {
       name: '@electron-forge/maker-dmg',
+      platforms: ['darwin'],
       config: {
-        format: 'ULFO',
-        icon: './icons/logseq_big_sur.icns',
-        name: 'Logseq'
+        name: 'Logseq',
+        icon: './icons/logseq_big_sur.icns'
       }
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin', 'linux', 'win32'],
-    },
-
-    {
-      name: 'electron-forge-maker-appimage',
-      platforms: ['linux'],
-      config: {
-        mimeType: ["x-scheme-handler/logseq"]
-      }
+      platforms: ['darwin'],
     }
   ],
-
-  publishers: [
-    {
-      name: '@electron-forge/publisher-github',
-      config: {
-        repository: {
-          owner: 'logseq',
-          name: 'logseq'
-        },
-        prerelease: true
-      }
-    }
-  ],
-
   plugins: [
     {
       name: '@electron-forge/plugin-auto-unpack-natives',
       config: {}
     }
   ]
-}
+};
